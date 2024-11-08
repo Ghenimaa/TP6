@@ -29,6 +29,12 @@ public class TicketMachine {
 		price = ticketCost;
 		balance = 0;
 		total = 0;
+		if (ticketCost <= 0) {
+			throw new IllegalArgumentException("Ticket price must be positive");
+		}
+		price = ticketCost;
+		balance = 0;
+		total = 0;
 	}
 
 	/**
@@ -37,6 +43,7 @@ public class TicketMachine {
 	 * @return the price of tickets for this machine
 	 */
 	public int getPrice() {
+
 		return price;
 	}
 
@@ -46,6 +53,7 @@ public class TicketMachine {
 	 * @return the total amount collected by the machine.
 	 */
 	public int getTotal() {
+
 		return total;
 	}
 
@@ -53,8 +61,10 @@ public class TicketMachine {
 	 * @return the amount of money already inserted for the next ticket.
 	 */
 	public int getBalance() {
+
 		return balance;
 	}
+
 
 	/**
 	 * Receive an amount of money in cents from a customer.
@@ -62,19 +72,22 @@ public class TicketMachine {
 	 * @param amount the amount inserted, in cents (positive)
 	 * @throws IllegalArgumentException if amount is not positive
 	 */
-	public void insertMoney(int amount) {
-		balance = balance + amount;
+	public void insertMoney(int a) {
+		if (a <= 0) {
+			throw new IllegalArgumentException("Amount must be positive");
+		}
+		balance = balance + a;
 	}
 
-	/**
-	 * Refunds the balance to customer
-	 *
-	 * @return the balance
-	 */
+
 	public int refund() {
 		System.out.println("Je vous rends : " + balance + " centimes");
-		return balance;
-	}
+		int amountToRefund = balance;
+		balance = 0; // Remet la balance à zéro après remboursement
+		return amountToRefund;
+
+}
+
 
 	/**
 	 * Print a ticket. Update the total collected and reduce the balance 
@@ -82,13 +95,20 @@ public class TicketMachine {
 	 * @return vrai si le ticket a été imprimé, faux sinon
 	 */
 	public boolean printTicket() {
-		// Simulate the printing of a ticket.
-		System.out.println("##################");
-		System.out.println("# The BlueJ Line");
-		System.out.println("# Ticket");
-		System.out.println("# " + price + " cents.");
-		System.out.println("##################");
-		System.out.println();
-		return true;
+		if (balance >= price) {
+			// Simulate the printing of a ticket.
+			System.out.println("##################");
+			System.out.println("# The BlueJ Line");
+			System.out.println("# Ticket");
+			System.out.println("# " + price + " cents.");
+			System.out.println("##################");
+			total =total + price;
+			balance = balance -price;
+			return true;
+		}
+		else {
+			System.out.println("Montant insuffisant pour imprimer le ticket.");
+			return false;
+		}
 	}
-}
+
