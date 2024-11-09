@@ -51,7 +51,7 @@ class TicketMachineTest {
 
 	@Test
 		// S5: La balance est décrémentée du prix du ticket quand un ticket est imprimé
-	void balanceIsDecrementedAfterPrintingTicket() {
+	void decrementeBalanceApresImpression() {
 		machine.insertMoney(PRICE + 20);
 		machine.printTicket();
 		assertEquals(20, machine.getBalance(), "La balance n'a pas été correctement " +
@@ -84,13 +84,13 @@ class TicketMachineTest {
 
 	@Test
 		// S9 : Un montant négatif ne peut pas être inséré dans la machine
-	void cannotInsertNegativeAmount() {
+	void nePeutPasInsererMontantNegatif() {
 		assertThrows(IllegalArgumentException.class, () -> machine.insertMoney(-10), "L'insertion d'un montant négatif aurait dû lever une exception");
 	}
 
 	@Test
 		// S10 : Il est impossible de créer une machine avec un prix de ticket négatif
-	void cannotCreateMachineWithNegativeTicketPrice() {
+	void nePeutPasCreerMachineAvecPrixNegatif() {
 		assertThrows(IllegalArgumentException.class, () -> new TicketMachine(-PRICE), "La création d'une machine avec un prix de ticket négatif aurait dû lever une exception");
 	}
 
